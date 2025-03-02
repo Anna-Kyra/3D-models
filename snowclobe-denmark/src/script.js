@@ -58,7 +58,7 @@ scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
-
+controls.enableDamping = true
 
 /**
  * Renderer
@@ -77,6 +77,9 @@ const clock = new THREE.Clock()
 
 const tick = () => {
     const elapsedTime = clock.getElapsedTime()
+
+    // Update controls
+    controls.update()
 
     // Render
     renderer.render(scene, camera)
