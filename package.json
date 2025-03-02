@@ -1,0 +1,17 @@
+{
+  "name": "3d-models",
+  "version": "1.0.0",
+  "description": "3D models die ik heb gemaakt met via Three.js importeren",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.174.0",
+    "vite": "^6.2.0"
+  }
+}
