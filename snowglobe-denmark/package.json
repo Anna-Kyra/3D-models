@@ -1,0 +1,20 @@
+{
+  "name": "snowglobe-denmark",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "vite": "^6.2.0",
+    "vite-plugin-restart": "^0.4.2"
+  },
+  "dependencies": {
+    "three": "^0.174.0"
+  }
+}
