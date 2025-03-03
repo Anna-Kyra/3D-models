@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import GUI from 'lil-gui'
 
 /**
@@ -22,10 +23,65 @@ const scene = new THREE.Scene()
 const mesh = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1),
     new THREE.MeshBasicMaterial({
-        color: 'red'
+        color: 'blue'
     })
 )
-scene.add(mesh)
+// scene.add(mesh)
+
+// snowglobe
+const gltfLoader = new GLTFLoader()
+
+gltfLoader.load(
+    '/models/snowclobe.glb',
+    (gltf) =>
+    {
+        gltf.scene.rotation.y = Math.PI * 2 * 0.75
+        gltf.scene.scale.set(0.20, 0.20, 0.20)
+        scene.add(gltf.scene)
+    }
+)
+
+/**
+ * Lights
+ */
+const ambientLight = new THREE.AmbientLight(0xffffff, 1)
+scene.add(ambientLight)
+
+const directionalLight = new THREE.DirectionalLight('#BFC9FF', 4.8)
+directionalLight.castShadow = true
+directionalLight.shadow.mapSize.set(1024, 1024)
+directionalLight.shadow.camera.far = 15
+directionalLight.shadow.camera.left = - 7
+directionalLight.shadow.camera.top = 7
+directionalLight.shadow.camera.right = 7
+directionalLight.shadow.camera.bottom = - 7
+directionalLight.position.set(5, 5, 5)
+scene.add(directionalLight)
+
+const directionalLight2 = new THREE.DirectionalLight('#BFC9FF', 1)
+directionalLight2.castShadow = true
+directionalLight2.shadow.mapSize.set(1024, 1024)
+directionalLight2.shadow.camera.far = 15
+directionalLight2.shadow.camera.left = - 7
+directionalLight2.shadow.camera.top = 7
+directionalLight2.shadow.camera.right = 7
+directionalLight2.shadow.camera.bottom = - 7
+directionalLight2.position.set(-5, 5, -2)
+scene.add(directionalLight2)
+
+const directionalLight3 = new THREE.PointLight('#FF41F5', 2)
+directionalLight3.castShadow = true
+directionalLight3.shadow.mapSize.set(1024, 1024)
+directionalLight3.shadow.camera.far = 15
+directionalLight3.shadow.camera.left = - 7
+directionalLight3.shadow.camera.top = 7
+directionalLight3.shadow.camera.right = 7
+directionalLight3.shadow.camera.bottom = - 7
+directionalLight3.position.set(0, .7, 0)
+scene.add(directionalLight3)
+
+const directionalLightHelper3 = new THREE.PointLightHelper(directionalLight3, 1.8)
+// scene.add(directionalLightHelper3)
 
 /**
  * Sizes
@@ -55,18 +111,20 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.z = 3
+camera.position.set(0, 1.5, 2.5)
 scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
+controls.target.set(0, .9, 0)
 controls.enableDamping = true
 
 /**
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
+    canvas: canvas,
+    alpha: true
 })
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFSoftShadowMap
